@@ -1,0 +1,21 @@
+{
+  "name": "payment-handler-polyfill",
+  "version": "0.0.1-0",
+  "description": "Payment Handler API Polyfill",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digitalbazaar/payment-handler-polyfill.git"
+  },
+  "author": {
+    "name": "Digital Bazaar, Inc.",
+    "email": "support@digitalbazaar.com",
+    "url": "http://digitalbazaar.com"
+  },
+  "bugs": {
+    "url": "https://github.com/digitalbazaar/payment-handler-polyfill/issues"
+  },
+  "homepage": "https://github.com/digitalbazaar/payment-handler-polyfill",
+  "dependencies": {
+  }
+}
