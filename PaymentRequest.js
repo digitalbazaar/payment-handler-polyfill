@@ -6,8 +6,20 @@
 /* global navigator */
 'use strict';
 
-import * as localforage from 'localforage';
-import {PermissionManager} from 'web-request-mediator';
+import {utils} from 'web-request-rpc';
+
+import {PaymentResponse} from './PaymentResponse';
+
+/* Example usage:
+  const pr = new PaymentRequest([{
+    supportedMethods: ['basic-card']
+  }], {
+    total: {
+      label: 'Total',
+      amount: {currency: 'USD', value: '1.00'}
+    }
+  });
+*/
 
 export class PaymentRequest {
   constructor(methodData, details, options) {
@@ -15,11 +27,19 @@ export class PaymentRequest {
     // TODO: validate details
     // TODO: validate options
 
-    this.id = null;
+    // generate `details.id` if not set
+    this.id = 'id' in details ? details.id : utils.uuidv4();
+    this.methodData = methodData.slice();
+    this.details = Object.assign({id: this.id}, details);
+    this.options = Object.assign({}, options);
+
     this.shippingAddress = null;
-    this.shippingOption = null
+    this.shippingOption = null;
     this.shippingType = null;
 
+    // for internal use only, note that `_requestHandle` is NOT the same as
+    // `details.id`
+    this._requestHandle = null;
     this._paymentRequestServer = navigator.paymentManager._paymentRequest;
 
     // TODO: reuse `EventHandler` from either `web-request-rpc` or
@@ -38,13 +58,15 @@ export class PaymentRequest {
       throw new Error('InvalidStateError');
     }
 
-    this.id = await this._paymentRequestServer.create({
+    // create request on polyfill server
+    this._requestHandle = await this._paymentRequestServer.create({
       methodData: this.methodData,
       details: this.details,
       options: this.options
     });
 
-    return this._deserializeResponse(
+    // show request and await response
+    return new PaymentResponse(
       await this._paymentRequestServer.show(this.id));
   }
 
@@ -59,9 +81,5 @@ export class PaymentRequest {
       details: this.details,
       options: this.options
     });
-  }
-
-  _deserializeResponse(response) {
-    // TODO: convert JSON response into PaymentResponse
   }
 }
