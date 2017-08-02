@@ -71,8 +71,14 @@ export class PaymentRequest {
   }
 
   async abort() {
-    // TODO: call something on server that will abort in-progress request
-    // TODO: return void
+    // TODO: call something on server that will emit an AbortPaymentEvent
+    // TODO: return Promise that is fulfilled when payment is aborted and
+    //   rejected when it is not; if a payment handler has not yet been
+    //   engaged on the other end, abort will succeed; if a payment handler
+    //   has been engaged then if it has no abort payment event handler, abort
+    //   will fail but if it does, then whether or not it succeeds is up to
+    //   the payment handler (it will make a call on the event to indicate
+    //   whether or not abort was successful)
   }
 
   async canMakePayment() {
