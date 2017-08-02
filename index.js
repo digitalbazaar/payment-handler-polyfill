@@ -14,6 +14,22 @@ export async function load() {
 
   const url = 'https://bedrock.dev:18443/mediator';
   const serverContext = new rpc.ServerContext();
+
+  // enable listeners to receive remote mediator emitted events
+  // TODO: generalize this event emitter for all events?
+  // TODO: need to filter paymentrequest event listeners such that only the
+  //   appropriate registration receives an event (add a target and try and
+  //   build in at a low level or just add a listener for paymentrequest
+  //   events and redirect them to the appropriate handler on this end?
+  serverContext.server.define('paymentrequestEmitter', new rpc.EventEmitter({
+    deserialize(event) {
+      return new PaymentRequestEvent(event);
+    },
+    async waitFor(event) {
+      return event._promise;
+    }
+  });
+
   const injector = await serverContext.createWindow(url);
 
   // TODO: only install PaymentRequestService when appropriate
