@@ -40,7 +40,7 @@ export class PaymentRequest {
     // for internal use only, note that `_requestHandle` is NOT the same as
     // `details.id`
     this._requestHandle = null;
-    this._paymentRequestServer = navigator.paymentManager._paymentRequest;
+    this._remote = navigator.paymentPolyfill._paymentRequestService;
 
     // TODO: reuse `EventHandler` from either `web-request-rpc` or
     //   `web-request-mediator-client` (location TBD) to implement these
@@ -59,30 +59,26 @@ export class PaymentRequest {
     }
 
     // create request on polyfill server
-    this._requestHandle = await this._paymentRequestServer.create({
+    this._requestHandle = await this._remote.create({
       methodData: this.methodData,
       details: this.details,
       options: this.options
     });
 
     // show request and await response
-    return new PaymentResponse(
-      await this._paymentRequestServer.show(this.id));
+    return new PaymentResponse(await this._remote.show(this.id));
   }
 
   async abort() {
-    // TODO: call something on server that will emit an AbortPaymentEvent
-    // TODO: return Promise that is fulfilled when payment is aborted and
-    //   rejected when it is not; if a payment handler has not yet been
-    //   engaged on the other end, abort will succeed; if a payment handler
-    //   has been engaged then if it has no abort payment event handler, abort
-    //   will fail but if it does, then whether or not it succeeds is up to
-    //   the payment handler (it will make a call on the event to indicate
-    //   whether or not abort was successful)
+    // TODO: handle state (not yet shown? etc)
+    if(!this.id) {
+      throw new Error('InvalidStateError');
+    }
+    return this._remote.abort(this._requestHandle);
   }
 
   async canMakePayment() {
-    return navigator.paymentManager._paymentRequest.canMakePayment({
+    return this._remote.canMakePayment({
       methodData: this.methodData,
       details: this.details,
       options: this.options
