@@ -20,10 +20,10 @@ export async function load() {
 
   // TODO: only install PaymentRequestService when appropriate
   polyfill._paymentRequestService = injector.get('paymentRequest', {
-    ['create', 'show', 'abort']
+    functions: ['show', 'abort']
   });
   polyfill.permissions = injector.get('permissionManager', {
-    functions: ['request', 'query', 'revoke']
+    functions: ['query', 'request', 'revoke']
   });
 
   // TODO: only install PaymentHandlers API when appropriate
@@ -31,6 +31,10 @@ export async function load() {
 
   // TODO: only expose PaymentHandler API when appropriate
   polyfill.PaymentHandler = PaymentHandler;
+
+  // TODO: only expose PaymentRequest API when appropriate
+  polyfill.PaymentRequest = PaymentRequest;
+
   /* Usage:
   const handler = new PaymentHandler();
 

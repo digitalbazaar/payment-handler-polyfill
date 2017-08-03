@@ -15,7 +15,6 @@ export class PaymentManager {
     if(!(url && typeof url === 'string')) {
       throw new TypeError('"url" must be a non-empty string.');
     }
-
     this.paymentInstruments = new PaymentInstruments(url, injector);
   }
 

@@ -19,6 +19,11 @@ import {PaymentResponse} from './PaymentResponse';
       amount: {currency: 'USD', value: '1.00'}
     }
   });
+  try {
+    const response = await pr.show();
+  } catch(e) {
+    console.error(e);
+  }
 */
 
 export class PaymentRequest {
