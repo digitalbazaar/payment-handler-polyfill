@@ -7,30 +7,16 @@
 
 import * as rpc from 'web-request-rpc';
 
+import {PaymentHandler} from './PaymentHandler';
 import {PaymentHandlers} from './PaymentHandlers';
+import {PaymentRequest} from './PaymentRequest';
 
 export async function load() {
   const polyfill = {};
 
   const url = 'https://bedrock.dev:18443/mediator';
-  const serverContext = new rpc.ServerContext();
-
-  // enable listeners to receive remote mediator emitted events
-  // TODO: generalize this event emitter for all events?
-  // TODO: need to filter paymentrequest event listeners such that only the
-  //   appropriate registration receives an event (add a target and try and
-  //   build in at a low level or just add a listener for paymentrequest
-  //   events and redirect them to the appropriate handler on this end?
-  serverContext.server.define('paymentrequestEmitter', new rpc.EventEmitter({
-    deserialize(event) {
-      return new PaymentRequestEvent(event);
-    },
-    async waitFor(event) {
-      return event._promise;
-    }
-  });
-
-  const injector = await serverContext.createWindow(url);
+  const appContext = new rpc.WebAppContext();
+  const injector = await appContext.createWindow(url);
 
   // TODO: only install PaymentRequestService when appropriate
   polyfill._paymentRequestService = injector.get('paymentRequest', {
@@ -42,6 +28,22 @@ export async function load() {
 
   // TODO: only install PaymentHandlers API when appropriate
   polyfill.PaymentHandlers = new PaymentHandlers(injector);
+
+  // TODO: only expose PaymentHandler API when appropriate
+  polyfill.PaymentHandler = PaymentHandler;
+  /* Usage:
+  const handler = new PaymentHandler();
+
+  handler.addEventListener('paymentrequest', event => {
+    // TODO: handle event
+  });
+
+  handler.addEventListener('paymentabort', event => {
+    // TODO: handle event
+  });
+
+  await handler.connect();
+  */
 
   // expose polyfill
   navigator.paymentPolyfill = polyfill;

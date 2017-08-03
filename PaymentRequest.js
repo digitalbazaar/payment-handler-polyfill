@@ -37,9 +37,6 @@ export class PaymentRequest {
     this.shippingOption = null;
     this.shippingType = null;
 
-    // for internal use only, note that `_requestHandle` is NOT the same as
-    // `details.id`
-    this._requestHandle = null;
     this._remote = navigator.paymentPolyfill._paymentRequestService;
 
     // TODO: reuse `EventHandler` from either `web-request-rpc` or
@@ -58,15 +55,12 @@ export class PaymentRequest {
       throw new Error('InvalidStateError');
     }
 
-    // create request on polyfill server
-    this._requestHandle = await this._remote.create({
+    // show request and await response
+    return new PaymentResponse(await this._remote.show({
       methodData: this.methodData,
       details: this.details,
       options: this.options
-    });
-
-    // show request and await response
-    return new PaymentResponse(await this._remote.show(this.id));
+    }));
   }
 
   async abort() {
@@ -74,7 +68,7 @@ export class PaymentRequest {
     if(!this.id) {
       throw new Error('InvalidStateError');
     }
-    return this._remote.abort(this._requestHandle);
+    return this._remote.abort();
   }
 
   async canMakePayment() {
