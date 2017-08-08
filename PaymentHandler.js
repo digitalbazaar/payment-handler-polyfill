@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
+/* global DOMException */
 'use strict';
 
 import * as rpc from 'web-request-rpc';
@@ -15,9 +16,11 @@ export class PaymentHandler extends rpc.WebApp {
   constructor(origin) {
     super(origin || window.location.origin || window.location.href);
     this._emitter = new rpc.EventEmitter({
-      async waitUntil(event) => event._promise || Promise.reject(
-        new DOMException(
-          'No "paymentrequest" event handler found.', 'NotFoundError'));
+      async waitUntil(event) {
+        return event._promise || Promise.reject(
+          new DOMException(
+            'No "paymentrequest" event handler found.', 'NotFoundError'));
+      }
     });
   }
 

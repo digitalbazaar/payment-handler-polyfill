@@ -11,12 +11,21 @@ import {PaymentHandler} from './PaymentHandler';
 import {PaymentHandlers} from './PaymentHandlers';
 import {PaymentRequest} from './PaymentRequest';
 
-export async function load() {
+let loaded;
+export async function loadOnce(mediatorUrl) {
+  if(loaded) {
+    return loaded;
+  }
+  return loaded = await load(mediatorUrl);
+}
+
+export async function load(
+  mediatorUrl = 'https://payment.mediator.dev:12443/mediator') {
   const polyfill = {};
 
-  const url = 'https://bedrock.dev:18443/mediator';
+  //const url = 'https://bedrock.dev:18443/mediator';
   const appContext = new rpc.WebAppContext();
-  const injector = await appContext.createWindow(url);
+  const injector = await appContext.createWindow(mediatorUrl);
 
   // TODO: only install PaymentRequestService when appropriate
   polyfill._paymentRequestService = injector.get('paymentRequest', {
