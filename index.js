@@ -9,6 +9,7 @@ import * as rpc from 'web-request-rpc';
 
 import {PaymentHandler} from './PaymentHandler';
 import {PaymentHandlers} from './PaymentHandlers';
+import {PaymentManager} from './PaymentManager';
 import {PaymentRequest} from './PaymentRequest';
 
 let loaded;
@@ -44,6 +45,9 @@ export async function load(mediatorUrl) {
 
   // TODO: only expose PaymentHandler API when appropriate
   polyfill.PaymentHandler = PaymentHandler;
+
+  // TODO: only expose PaymentManager API when appropriate
+  polyfill.PaymentManager = PaymentManager;
 
   // TODO: only expose PaymentRequest API when appropriate
   polyfill.PaymentRequest = PaymentRequest;
