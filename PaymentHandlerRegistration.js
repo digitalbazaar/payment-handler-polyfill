@@ -13,6 +13,6 @@ export class PaymentHandlerRegistration {
     if(!(url && typeof url === 'string')) {
       throw new TypeError('"url" must be a non-empty string.');
     }
-    this.paymentManager = new PaymentManager(url, {injector});
+    this.paymentManager = new PaymentManager(url, injector);
   }
 }

@@ -9,6 +9,7 @@ import {PaymentHandlerRegistration} from './PaymentHandlerRegistration';
 
 export class PaymentHandlers {
   constructor(injector) {
+    this._injector = injector;
     this._remote = injector.get('paymentHandlers', {
       functions: [
         'register', 'unregister', 'getRegistration', 'hasRegistration']
@@ -25,7 +26,7 @@ export class PaymentHandlers {
   async register(url) {
     // register with payment mediator
     url = await this._remote.register(url);
-    return new PaymentHandlerRegistration(url);
+    return new PaymentHandlerRegistration(url, this._injector);
   }
 
   /**
@@ -54,7 +55,7 @@ export class PaymentHandlers {
     if(!url) {
       return null;
     }
-    return new PaymentHandlerRegistration(url);
+    return new PaymentHandlerRegistration(url, this._injector);
   }
 
   /**
