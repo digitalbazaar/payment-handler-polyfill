@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
-/* global PaymentHandlers */
+/* global navigator */
 'use strict';
 
 import {utils} from 'web-request-rpc';
