@@ -26,7 +26,8 @@ export class PaymentManager {
    *           permission (e.g. 'granted'/'denied').
    */
   static async requestPermission() {
-    return navigator.paymentPolyfill.permissions.request(
-      {name: 'paymenthandler'}).state;
+    const status = await navigator.paymentPolyfill.permissions.request(
+      {name: 'paymenthandler'});
+    return status.state;
   }
 }
