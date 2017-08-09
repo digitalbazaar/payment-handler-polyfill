@@ -52,20 +52,6 @@ export async function load(mediatorUrl) {
   // TODO: only expose PaymentRequest API when appropriate
   polyfill.PaymentRequest = PaymentRequest;
 
-  /* Usage:
-  const handler = new PaymentHandler();
-
-  handler.addEventListener('paymentrequest', event => {
-    // TODO: handle event
-  });
-
-  handler.addEventListener('paymentabort', event => {
-    // TODO: handle event
-  });
-
-  await handler.connect();
-  */
-
   // expose polyfill
   navigator.paymentPolyfill = polyfill;
 

@@ -35,3 +35,21 @@ API will be used.
 
 Under scenario 3, this polyfill will expose `PaymentHandlers` and its own
 version of `PaymentRequest`.
+
+### Example Payment Handler
+
+Usage:
+
+```js
+const handler = new PaymentHandler();
+
+andler.addEventListener('paymentrequest', event => {
+  // TODO: handle event
+});
+
+handler.addEventListener('paymentabort', event => {
+  // TODO: handle event
+});
+
+await handler.connect();
+```
