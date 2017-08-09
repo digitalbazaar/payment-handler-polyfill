@@ -22,12 +22,11 @@ export class PaymentManager {
    * Requests that the user grant 'paymenthandler' permission to the current
    * origin.
    *
-   * @return a Promise that resolves to the PermissionStatus containing
-   *           the new state of the permission
-   *           (e.g. {state: 'granted'/'denied'})).
+   * @return a Promise that resolves to the new PermissionState of the
+   *           permission (e.g. 'granted'/'denied').
    */
   static async requestPermission() {
     return navigator.paymentPolyfill.permissions.request(
-      {name: 'paymenthandler'});
+      {name: 'paymenthandler'}).state;
   }
 }
