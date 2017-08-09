@@ -19,9 +19,13 @@ export async function loadOnce(mediatorUrl) {
   return loaded = await load(mediatorUrl);
 }
 
-export async function load(
-  mediatorUrl = 'https://payment.mediator.dev:12443/mediator') {
+export async function load(mediatorUrl) {
   const polyfill = {};
+
+  if(!mediatorUrl) {
+    mediatorUrl = 'https://payment.mediator.dev:12443/mediator?origin=' +
+      encodeURIComponent(window.location.origin)
+  }
 
   //const url = 'https://bedrock.dev:18443/mediator';
   const appContext = new rpc.WebAppContext();
