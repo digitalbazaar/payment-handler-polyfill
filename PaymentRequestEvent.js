@@ -13,6 +13,7 @@ import * as rpc from 'web-request-rpc';
 //   core attributes
 export class PaymentRequestEvent extends Event {
   constructor({
+    paymentHandler,
     topLevelOrigin,
     paymentRequestOrigin,
     paymentRequestId,
@@ -22,6 +23,7 @@ export class PaymentRequestEvent extends Event {
     instrumentKey
   }) {
     super('paymentrequest');
+    this._paymentHandler = paymentHandler;
     this.topLevelOrigin = topLevelOrigin;
     this.paymentRequestOrigin = paymentRequestOrigin;
     this.paymentRequestId = paymentRequestId;
@@ -34,7 +36,8 @@ export class PaymentRequestEvent extends Event {
   async openWindow(url) {
     // TODO: disallow more than one call
 
-    // TODO: ensure `url` is to the same origin?
+    // TODO: ensure `url` is to the same origin
+    await this._paymentHandler.show();
     const clientWindow = new rpc.ClientWindow(url);
     clientWindow.ready();
     clientWindow.show();
@@ -48,7 +51,7 @@ export class PaymentRequestEvent extends Event {
   }
 
   respondWith(handlerResponse) {
-    // TODO: throw exception is `_promise` is already set
+    // TODO: throw exception if `_promise` is already set
 
     // TODO: validate handlerResponse
     this._promise = handlerResponse;

@@ -17,7 +17,8 @@ export class PaymentHandlerService {
   async requestPayment(paymentRequestEvent) {
     // TODO: validate paymentRequestEvent
     return await this._paymentHandler._emitter.emit(
-      new PaymentRequestEvent(paymentRequestEvent));
+      new PaymentRequestEvent(Object.assign(
+        {paymentHandler: this._paymentHandler}, paymentRequestEvent)));
   }
 
   async abortPayment(paymentAbortEvent) {

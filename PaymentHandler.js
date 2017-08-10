@@ -20,6 +20,8 @@ export class PaymentHandler extends rpc.WebApp {
     super(mediatorOrigin);
     this._emitter = new rpc.EventEmitter({
       async waitUntil(event) {
+        // TODO: may need to do `this.hide()` after this promise resolves
+        //   to handle case where e.openWindow() was called
         return event._promise || Promise.reject(
           new DOMException(
             'No "paymentrequest" event handler found.', 'NotFoundError'));
