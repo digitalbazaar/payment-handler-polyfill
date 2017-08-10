@@ -12,6 +12,11 @@ import {PaymentHandlers} from './PaymentHandlers';
 import {PaymentManager} from './PaymentManager';
 import {PaymentRequest} from './PaymentRequest';
 
+// RPC timeouts, 0 = indefinite
+const PAYMENT_ABORT_TIMEOUT = 40 * 1000;
+const PAYMENT_REQUEST_TIMEOUT = 0;
+const PERMISSION_REQUEST_TIMEOUT = 0;
+
 let loaded;
 export async function loadOnce(mediatorUrl) {
   if(loaded) {
@@ -34,10 +39,15 @@ export async function load(mediatorUrl) {
 
   // TODO: only install PaymentRequestService when appropriate
   polyfill._paymentRequestService = injector.get('paymentRequest', {
-    functions: ['show', 'abort']
+    functions: [
+      {name: 'show', options: {timeout: PAYMENT_REQUEST_TIMEOUT}},
+      {name: 'abort', options: {timeout: PAYMENT_ABORT_TIMEOUT}}]
   });
   polyfill.permissions = injector.get('permissionManager', {
-    functions: ['query', 'request', 'revoke']
+    functions: [
+      'query',
+      {name: 'request', options: {timeout: PERMISSION_REQUEST_TIMEOUT}},
+      'revoke']
   });
 
   // TODO: only install PaymentHandlers API when appropriate
