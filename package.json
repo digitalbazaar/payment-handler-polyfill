@@ -17,5 +17,11 @@
   },
   "homepage": "https://github.com/digitalbazaar/payment-handler-polyfill",
   "dependencies": {
+    "web-request-rpc": "^0.0.1"
+  },
+  "bedrock": {
+    "browserDependencies": [
+      "web-request-rpc"
+    ]
   }
 }
