@@ -15,7 +15,7 @@ export class PaymentAbortEvent extends Event {
     paymentRequestOrigin,
     paymentRequestId
   }) {
-    this.type = 'paymentabort';
+    super('paymentabort');
     this.topLevelOrigin = topLevelOrigin;
     this.paymentRequestOrigin = paymentRequestOrigin;
     this.paymentRequestId = paymentRequestId;

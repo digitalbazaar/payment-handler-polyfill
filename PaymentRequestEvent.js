@@ -21,7 +21,7 @@ export class PaymentRequestEvent extends Event {
     modifiers,
     instrumentKey
   }) {
-    this.type = 'paymentrequest';
+    super('paymentrequest');
     this.topLevelOrigin = topLevelOrigin;
     this.paymentRequestOrigin = paymentRequestOrigin;
     this.paymentRequestId = paymentRequestId;

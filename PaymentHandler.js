@@ -10,11 +10,14 @@ import * as rpc from 'web-request-rpc';
 
 import {PaymentHandlerService} from './PaymentHandlerService';
 
-const EVENT_TYPES = ['paymentrequest', 'abortpayment'];
+const EVENT_TYPES = ['paymentrequest', 'paymentabort'];
 
 export class PaymentHandler extends rpc.WebApp {
-  constructor(origin) {
-    super(origin || window.location.origin || window.location.href);
+  constructor(mediatorOrigin) {
+    if(typeof mediatorOrigin !== 'string') {
+      throw new TypeError('"mediatorOrigin" must be a string.');
+    }
+    super(mediatorOrigin);
     this._emitter = new rpc.EventEmitter({
       async waitUntil(event) {
         return event._promise || Promise.reject(

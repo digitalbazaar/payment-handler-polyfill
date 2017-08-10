@@ -16,17 +16,17 @@ export class PaymentHandlerService {
 
   async requestPayment(paymentRequestEvent) {
     // TODO: validate paymentRequestEvent
-    return await this._paymentHandler.emit(
+    return await this._paymentHandler._emitter.emit(
       new PaymentRequestEvent(paymentRequestEvent));
   }
 
   async abortPayment(paymentAbortEvent) {
     // TODO: validate paymentAbortEvent
-    if(this._paymentHandler.emitter.listeners.length === 0) {
+    if(this._paymentHandler._emitter.listeners.length === 0) {
       // TODO: abort must fail if payment handle will not handle it
       throw new DOMException('Abort not supported', 'NotSupportedError');
     }
-    return await this._paymentHandler.emit(
+    return await this._paymentHandler._emitter.emit(
       new PaymentAbortEvent(paymentAbortEvent));
   }
 }

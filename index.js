@@ -26,6 +26,7 @@ export async function loadOnce(mediatorUrl) {
 }
 
 export async function load(mediatorUrl) {
+  console.log('loading payment handler polyfill...');
   const polyfill = {};
 
   if(!mediatorUrl) {
@@ -64,6 +65,8 @@ export async function load(mediatorUrl) {
 
   // expose polyfill
   navigator.paymentPolyfill = polyfill;
+
+  console.log('payment handler polyfill loaded');
 
   return polyfill;
 };
