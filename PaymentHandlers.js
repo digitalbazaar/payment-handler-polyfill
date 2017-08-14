@@ -25,7 +25,7 @@ export class PaymentHandlers {
    */
   async register(url) {
     // register with payment mediator
-    url = await this._remote.register(url);
+    url = await this._remote.register('payment', url);
     return new PaymentHandlerRegistration(url, this._injector);
   }
 
@@ -39,7 +39,7 @@ export class PaymentHandlers {
    */
   async unregister(url) {
     // unregister with payment mediator
-    return this._remote.unregister(url);
+    return this._remote.unregister('payment', url);
   }
 
   /**
@@ -51,7 +51,7 @@ export class PaymentHandlers {
    *           `null` if no such registration exists.
    */
   async getRegistration(url) {
-    url = await this._remote.getRegistration(url);
+    url = await this._remote.getRegistration('payment', url);
     if(!url) {
       return null;
     }
@@ -68,6 +68,6 @@ export class PaymentHandlers {
    *           `false` if not.
    */
   async hasRegistration(url) {
-    return await this._remote.hasRegistration(url);
+    return await this._remote.hasRegistration('payment', url);
   }
 }
