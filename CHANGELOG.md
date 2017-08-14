@@ -1,5 +1,10 @@
 # payment-handler-polyfill ChangeLog
 
+## 0.0.4 - 2017-08-14
+
+### Changed
+- Use generic `WebRequestHandlersService` on remote end.
+
 ## 0.0.3 - 2017-08-10
 
 ### Changed
