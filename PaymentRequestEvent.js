@@ -38,16 +38,15 @@ export class PaymentRequestEvent extends Event {
 
     // TODO: ensure `url` is to the same origin
     await this._paymentHandler.show();
-    const clientWindow = new rpc.ClientWindow(url);
-    clientWindow.ready();
-    clientWindow.show();
-    // TODO: note that `ClientWindow` is not a ServiceWorker
+    const appWindow = new rpc.WebAppWindow(url);
+    appWindow.ready();
+    appWindow.show();
+    // TODO: note that `appWindow.handle` is not a ServiceWorker
     //   `WindowClient` polyfill... could be confusing here, should we
-    //   implement a `ClientWindow`? -- potentially by just renaming
-    //   `ClientWindow` to `WindowClient`... there is, for example,
-    //   a `navigate` call on WindowClient that enforces same origin, would
+    //   implement one to wrap it? -- there is, for example, a
+    //   `navigate` call on `WindowClient` that enforces same origin, would
     //   need to attempt to add or approximate that
-    return clientWindow.handle;
+    return appWindow.handle;
   }
 
   respondWith(handlerResponse) {
