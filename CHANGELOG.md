@@ -1,5 +1,10 @@
 # payment-handler-polyfill ChangeLog
 
+## 0.0.5 - 2017-08-14
+
+### Changed
+- Use `WebAppWindow`.
+
 ## 0.0.4 - 2017-08-14
 
 ### Changed
