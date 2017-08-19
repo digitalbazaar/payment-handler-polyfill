@@ -1,5 +1,7 @@
 # payment-handler-polyfill ChangeLog
 
+## 0.1.0 - 2017-08-18
+
 ## 0.0.5 - 2017-08-14
 
 ### Changed
