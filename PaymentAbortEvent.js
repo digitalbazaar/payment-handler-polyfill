@@ -9,13 +9,14 @@
 // can't use "ExtendableEvent"; only accessible from Workers
 // TODO: may not be able to even extend `Event` here; could produce "incorrect"
 //   core attributes
-export class PaymentAbortEvent extends Event {
+export class PaymentAbortEvent /*extends Event*/ {
   constructor({
     topLevelOrigin,
     paymentRequestOrigin,
     paymentRequestId
   }) {
-    super('paymentabort');
+    //super('paymentabort');
+    this.type = 'paymentabort';
     this.topLevelOrigin = topLevelOrigin;
     this.paymentRequestOrigin = paymentRequestOrigin;
     this.paymentRequestId = paymentRequestId;

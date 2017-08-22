@@ -11,7 +11,7 @@ import * as rpc from 'web-request-rpc';
 // can't use "ExtendableEvent"; only accessible from Workers
 // TODO: may not be able to even extend `Event` here; could produce "incorrect"
 //   core attributes
-export class PaymentRequestEvent extends Event {
+export class PaymentRequestEvent /*extends Event*/ {
   constructor({
     paymentHandler,
     topLevelOrigin,
@@ -22,7 +22,8 @@ export class PaymentRequestEvent extends Event {
     modifiers,
     instrumentKey
   }) {
-    super('paymentrequest');
+    //super('paymentrequest');
+    this.type = 'paymentrequest';
     this._paymentHandler = paymentHandler;
     this.topLevelOrigin = topLevelOrigin;
     this.paymentRequestOrigin = paymentRequestOrigin;
