@@ -1,5 +1,14 @@
 # payment-handler-polyfill ChangeLog
 
+## 0.1.1 - 2017-08-27
+
+### Added
+- Ensure icons are prefetched.
+
+### Changed
+- Do not inherit from Event. Currently this causes problems
+  when transpiling.
+
 ## 0.1.0 - 2017-08-18
 
 ## 0.0.5 - 2017-08-14
