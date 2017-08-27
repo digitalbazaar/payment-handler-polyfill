@@ -34,7 +34,6 @@ export async function load(mediatorUrl) {
       encodeURIComponent(window.location.origin)
   }
 
-  //const url = 'https://bedrock.dev:18443/mediator';
   const appContext = new rpc.WebAppContext();
   const injector = await appContext.createWindow(mediatorUrl);
 
