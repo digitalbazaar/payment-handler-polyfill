@@ -1,5 +1,10 @@
 # payment-handler-polyfill ChangeLog
 
+## 0.1.2 - 2017-08-29
+
+### Fixed
+- Fix bug in `imageToDataUrl`.
+
 ## 0.1.1 - 2017-08-27
 
 ### Added
