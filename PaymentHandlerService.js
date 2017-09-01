@@ -6,8 +6,8 @@
 /* global DOMException */
 'use strict';
 
-import {PaymentAbortEvent} from './PaymentAbortEvent';
-import {PaymentRequestEvent} from './PaymentRequestEvent';
+import {PaymentAbortEvent} from './PaymentAbortEvent.js';
+import {PaymentRequestEvent} from './PaymentRequestEvent.js';
 
 export class PaymentHandlerService {
   constructor(paymentHandler) {

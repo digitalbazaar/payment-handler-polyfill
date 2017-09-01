@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import {PaymentHandlerRegistration} from './PaymentHandlerRegistration';
+import {PaymentHandlerRegistration} from './PaymentHandlerRegistration.js';
 
 export class PaymentHandlers {
   constructor(injector) {

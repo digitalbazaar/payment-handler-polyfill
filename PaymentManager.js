@@ -8,7 +8,7 @@
 
 import {utils} from 'web-request-rpc';
 
-import {PaymentInstruments} from './PaymentInstruments';
+import {PaymentInstruments} from './PaymentInstruments.js';
 
 export class PaymentManager {
   constructor(url, injector) {

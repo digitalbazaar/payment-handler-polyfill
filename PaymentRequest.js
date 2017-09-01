@@ -8,7 +8,7 @@
 
 import {utils} from 'web-request-rpc';
 
-import {PaymentResponse} from './PaymentResponse';
+import {PaymentResponse} from './PaymentResponse.js';
 
 /* Example usage:
   const pr = new PaymentRequest([{

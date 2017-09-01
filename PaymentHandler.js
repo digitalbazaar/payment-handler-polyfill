@@ -8,7 +8,7 @@
 
 import * as rpc from 'web-request-rpc';
 
-import {PaymentHandlerService} from './PaymentHandlerService';
+import {PaymentHandlerService} from './PaymentHandlerService.js';
 
 const EVENT_TYPES = ['paymentrequest', 'paymentabort'];
 

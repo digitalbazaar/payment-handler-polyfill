@@ -7,10 +7,10 @@
 
 import * as rpc from 'web-request-rpc';
 
-import {PaymentHandler} from './PaymentHandler';
-import {PaymentHandlers} from './PaymentHandlers';
-import {PaymentManager} from './PaymentManager';
-import {PaymentRequest} from './PaymentRequest';
+import {PaymentHandler} from './PaymentHandler.js';
+import {PaymentHandlers} from './PaymentHandlers.js';
+import {PaymentManager} from './PaymentManager.js';
+import {PaymentRequest} from './PaymentRequest.js';
 
 // RPC timeouts, 0 = indefinite
 const PAYMENT_ABORT_TIMEOUT = 40 * 1000;
