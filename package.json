@@ -1,6 +1,6 @@
 {
   "name": "payment-handler-polyfill",
-  "version": "0.1.3",
+  "version": "0.1.4-0",
   "description": "Payment Handler API Polyfill",
   "main": "index.js",
   "repository": {
