@@ -1,7 +1,7 @@
 # payment-handler-polyfill
-A polyfill for the Payment Handler API
+A polyfill for the [Payment Handler API][]
 
-## API Differences with [Payment Handler API 1.0]()
+## API Differences with [Payment Handler API][]
 
 TODO: introduction of `PaymentHandlers` global with API:
 
@@ -161,3 +161,5 @@ handler.addEventListener('paymentrequest', event => {
   }));
 });
 ```
+
+[Payment Handler API]: https://w3c.github.io/payment-handler/
