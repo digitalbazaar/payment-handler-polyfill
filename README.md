@@ -36,6 +36,20 @@ API will be used.
 Under scenario 3, this polyfill will expose `PaymentHandlers` and its own
 version of `PaymentRequest`.
 
+### Loading the polyfill
+
+Usage:
+
+```js
+import * as polyfill 'payment-handler-polyfill';
+
+// MEDIATOR_ORIGIN is expected to default to 'https://web-payments.io' in
+// the future
+await polyfill.loadOnce(
+  MEDIATOR_ORIGIN + '/mediator?origin=' +
+  encodeURIComponent(window.location.origin));
+```
+
 ### Registering a Payment Handler
 
 Usage:
@@ -97,4 +111,53 @@ async function pay() {
     console.error(e);
   }
 };
+```
+
+### Handling a Payment Request in the Payment Handler
+
+This code must run when the browser requests the URL registered as
+a payment handler (e.g. '/credential-handler'). It is similar to running
+a Service Worker but will work in browsers that have no implemented the
+Service Worker specification.
+
+Usage:
+
+```js
+const handler = new PaymentHandler(MEDIATOR_ORIGIN);
+
+handler.addEventListener('paymentrequest', event => {
+  event.respondWith(new Promise(async (resolve, reject) => {
+    let windowClient;
+
+    window.addEventListener('message', e => {
+      // ignore messages we don't care about
+      if(!(e.source === windowClient &&
+        e.origin === window.location.origin)) {
+        return;
+      }
+
+      // wait for 'request' message from the window we opened requesting the
+      // payment request details
+      if(e.data.type === 'request') {
+        // send the window we opened the payment request details
+        return windowClient.postMessage({
+          topLevelOrigin: event.topLevelOrigin,
+          methodData: event.methodData,
+          total: event.total,
+          instrumentKey: event.instrumentKey
+        }, window.location.origin);
+      }
+
+      if(e.data.type === 'response') {
+        // we've received the payment response from the window we opened,
+        // send it back to the browser, we're done!
+        resolve(e.data.response);
+      }
+    });
+
+    // open a window to show a UI to handle the payment request; it will
+    // send us a message requesting the payment request details when it's ready
+    windowClient = await event.openWindow('/paymentrequest');
+  }));
+});
 ```
