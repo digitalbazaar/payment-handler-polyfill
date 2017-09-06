@@ -36,20 +36,65 @@ API will be used.
 Under scenario 3, this polyfill will expose `PaymentHandlers` and its own
 version of `PaymentRequest`.
 
-### Example Payment Handler
+### Step #1: Registering a Payment Handler
 
 Usage:
 
 ```js
-const handler = new PaymentHandler();
+async function install() {
+  // request permission to install a payment handler
+  const result = await PaymentManager.requestPermission();
+  if(result !== 'granted') {
+    throw new Error('Permission denied.');
+    return;
+  }
 
-andler.addEventListener('paymentrequest', event => {
-  // TODO: handle event
-});
+  // get payment handler registration
+  const registration = await PaymentHandlers.register('/payment-handler');
 
-handler.addEventListener('paymentabort', event => {
-  // TODO: handle event
-});
+  await addInstruments(registration);
+}
 
-await handler.connect();
+async function addInstruments(registration) {
+  return Promise.all([
+    registration.paymentManager.instruments.set(
+      // this could be a UUID -- any 'key' understood by this payment handler
+      'default',
+      {
+        name: 'Visa *1234',
+        icons: [{
+          src: '/images/new_visa.gif',
+          sizes: '40x40',
+          type: 'image/gif'
+        }],
+        enabledMethods: ['basic-card'],
+        capabilities: {
+          supportedNetworks: ['visa'],
+          supportedTypes: ['credit', 'debit', 'prepaid']
+        }
+      })
+    ]);
+}
+```
+
+### Step #2: Request Payment
+
+```js
+async function pay() {
+  try {
+    // request payment by credit card for $1 USD
+    const pr = new PaymentRequest([{
+      supportedMethods: ['basic-card']
+    }], {
+      total: {
+        label: 'Total',
+        amount: {currency: 'USD', value: '1.00'}
+      }
+    });
+    const response = await pr.show();
+    console.log('payment response', response);
+  } catch(e) {
+    console.error(e);
+  }
+};
 ```
