@@ -36,7 +36,7 @@ API will be used.
 Under scenario 3, this polyfill will expose `PaymentHandlers` and its own
 version of `PaymentRequest`.
 
-### Step #1: Registering a Payment Handler
+### Registering a Payment Handler
 
 Usage:
 
@@ -77,7 +77,7 @@ async function addInstruments(registration) {
 }
 ```
 
-### Step #2: Request Payment
+### Requesting Payment
 
 ```js
 async function pay() {
