@@ -41,7 +41,7 @@ version of `PaymentRequest`.
 Usage:
 
 ```js
-import * as polyfill 'payment-handler-polyfill';
+import * as polyfill from 'payment-handler-polyfill';
 
 // MEDIATOR_ORIGIN is expected to default to 'https://web-payments.io' in
 // the future
