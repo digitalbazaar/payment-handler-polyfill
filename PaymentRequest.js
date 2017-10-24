@@ -38,6 +38,7 @@ export class PaymentRequest {
     this.methodData = methodData.slice();
     this.details = Object.assign({id: this.id}, details);
     this.options = Object.assign({}, arguments[2] || {});
+    this.state = 'created';
 
     this.shippingAddress = null;
     this.shippingOption = null;
@@ -57,11 +58,18 @@ export class PaymentRequest {
 
   async show() {
     // TODO: handle state (already shown? etc)
+    if(this.state !== 'created') {
+      throw new DOMException(
+        'PaymentRequest not in "created" state.', 'InvalidStateError');
+    }
     if(!this.id) {
       throw new Error('InvalidStateError');
     }
 
+    this.state = 'interactive';
+
     // show request and await response
+    // TODO: set state to closed if request accepted
     return new PaymentResponse(await this._remote.show({
       methodData: this.methodData,
       details: this.details,
@@ -71,13 +79,25 @@ export class PaymentRequest {
 
   async abort() {
     // TODO: handle state (not yet shown? etc)
+    if(this.state !== 'interactive') {
+      throw new DOMException(
+        'PaymentRequest not in "interactive" state.', 'InvalidStateError');
+    }
     if(!this.id) {
       throw new Error('InvalidStateError');
     }
+
+    this.state = 'closed';
+
     return this._remote.abort();
   }
 
   async canMakePayment() {
+    if(this.state !== 'created') {
+      throw new DOMException(
+        'PaymentRequest not in "created" state.', 'InvalidStateError');
+    }
+
     return this._remote.canMakePayment({
       methodData: this.methodData,
       details: this.details,
