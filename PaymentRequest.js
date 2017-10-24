@@ -27,7 +27,8 @@ import {PaymentResponse} from './PaymentResponse.js';
 */
 
 export class PaymentRequest {
-  constructor(methodData, details, options) {
+  constructor(methodData, details) {
+
     // TODO: validate methodData
     // TODO: validate details
     // TODO: validate options
@@ -36,7 +37,7 @@ export class PaymentRequest {
     this.id = 'id' in details ? details.id : utils.uuidv4();
     this.methodData = methodData.slice();
     this.details = Object.assign({id: this.id}, details);
-    this.options = Object.assign({}, options);
+    this.options = Object.assign({}, arguments[2] || {});
 
     this.shippingAddress = null;
     this.shippingOption = null;
