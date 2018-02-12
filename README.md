@@ -36,6 +36,15 @@ API will be used.
 Under scenario 3, this polyfill will expose `PaymentHandlers` and its own
 version of `PaymentRequest`.
 
+TODO: Note that the polyfill design presently allows for the above
+considerations but in its current state the polyfill must be setup and
+called manually. It will not override native behavior directly, rather
+it will expose the polyfill under the namespace:
+
+```js
+navigator.paymentPolyfill.*
+```
+
 ### Loading the polyfill
 
 Usage:
