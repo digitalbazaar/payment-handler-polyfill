@@ -37,13 +37,16 @@ Under scenario 3, this polyfill will expose `PaymentHandlers` and its own
 version of `PaymentRequest`.
 
 TODO: Note that the polyfill design presently allows for the above
-considerations but in its current state the polyfill must be setup and
-called manually. It will not override native behavior directly, rather
-it will expose the polyfill under the namespace:
+considerations but in its current state the polyfill does not automatically
+override any native behavior. The polyfill simply exposes its features under
+its own namespace:
 
 ```js
 navigator.paymentPolyfill.*
 ```
+
+Websites using the polyfill may add their own code to configure which
+aspects of the polyfill they wish to expose via standard APIs.
 
 ### Loading the polyfill
 
@@ -68,6 +71,8 @@ await polyfill.loadOnce(
 Usage:
 
 ```js
+const PaymentManager = navigator.paymentPolyfill.PaymentManager;
+
 async function install() {
   // request permission to install a payment handler
   const result = await PaymentManager.requestPermission();
@@ -107,6 +112,8 @@ async function addInstruments(registration) {
 ### Requesting Payment
 
 ```js
+const PaymentRequest = navigator.paymentPolyfill.PaymentRequest;
+
 async function pay() {
   try {
     // request payment by credit card for $1 USD
@@ -136,6 +143,7 @@ Service Worker specification.
 Usage:
 
 ```js
+const PaymentHandler = navigator.paymentPolyfill.PaymentHandler;
 const handler = new PaymentHandler(MEDIATOR_ORIGIN);
 
 handler.addEventListener('paymentrequest', event => {
