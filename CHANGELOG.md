@@ -1,5 +1,8 @@
 # payment-handler-polyfill ChangeLog
 
+### Changed
+- Update web-request-rpc dependency.
+
 ## 0.1.3 - 2017-09-01
 
 ### Fixed
