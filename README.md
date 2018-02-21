@@ -181,6 +181,9 @@ handler.addEventListener('paymentrequest', event => {
     windowClient = await event.openWindow('/paymentrequest');
   }));
 });
+
+// connect to the mediator and await an event
+await handler.connect();
 ```
 
 [Payment Handler API]: https://w3c.github.io/payment-handler/
