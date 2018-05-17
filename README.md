@@ -63,7 +63,7 @@ import * as polyfill from 'payment-handler-polyfill';
 
 // Note: there is a demo payment mediator running at this URL that
 // can be used for testing
-//const MEDIATOR_ORIGIN = 'https://payment-mediator.demo.digitalbazaar.com';
+const MEDIATOR_ORIGIN = 'https://payment-mediator.demo.digitalbazaar.com';
 
 // MEDIATOR_ORIGIN is expected to default to 'https://web-payments.io' in
 // the future
