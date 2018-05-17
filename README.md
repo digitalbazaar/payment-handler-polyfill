@@ -1,6 +1,10 @@
 # payment-handler-polyfill
 A polyfill for the [Payment Handler API][]
 
+The demo works in Chrome, Firefox, and Edge. To make it work in Safari, you will have to allow third party cookies "Always":
+
+https://stackoverflow.com/questions/38584273/local-storage-cross-domain-safari-disables-it-by-default/38793832
+
 ## API Differences with [Payment Handler API][]
 
 TODO: introduction of `PaymentHandlers` global with API:
