@@ -54,6 +54,10 @@ aspects of the polyfill they wish to expose via standard APIs.
 
 Usage:
 
+```
+npm install payment-handler-polyfill
+```
+
 ```js
 import * as polyfill from 'payment-handler-polyfill';
 
